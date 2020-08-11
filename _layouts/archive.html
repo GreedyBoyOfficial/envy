@@ -1,0 +1,54 @@
+---
+layout: page
+---
+{% if page.posts.size > 0 %}
+    {% assign posts = page.posts %}
+{% else %}
+    {% assign posts = site.posts | where: page.page_filter.key, page.page_filter.value %}
+{% endif %}
+
+{%- assign featured_limit = 5 -%}
+{%- assign featured_posts = posts | where: "featured", true %}
+{%- if featured_posts.size > 1 %}
+<div class="slider content-width header">
+    <div class="slides">
+        {% for post in featured_posts limit:featured_limit %}
+            {%- assign words = post.content | strip_html | number_of_words -%}
+            {%- if post.article-caption -%}
+                {%- assign description = post.article-caption | split: '.' | first -%}
+            {%- else -%}
+                {%- assign description = post.description | split: '.' | first -%}
+            {% endif %}
+            {% include header-no-json-ld.html
+                url=post.url
+                color=post.featured-color
+                categories=post.categories
+                title=post.title
+                description=description
+                author=post.author
+                publishDate=post.date
+                image=post.featured-image.square
+                words=words
+                alt=post.featured-image-alt
+                bottomCutoff=false
+                isLink=true
+            %}
+        {% endfor %}
+    </div>
+    <div class="prev"><span></span></div>
+    <div class="next"><span></span></div>
+</div>
+{% else %}
+<br><br><br><br>
+{% endif %}
+
+<div class="article-grid">
+    {% assign i = 0 %}
+    {% for post in posts %}
+        {% if post.featured and i < featured_limit and featured_posts.size > 1 %}
+            {% assign i = i | plus: 1 %}
+            {% continue %}
+        {% endif %}
+        {% include tile.html post=post isFeatured=post.featured %}
+    {% endfor %}
+</div>

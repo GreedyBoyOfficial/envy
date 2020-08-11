@@ -1,0 +1,3 @@
+<a class="button" href="{{include.href}}" style="background: {{ include.color }}" {%- if include.nofollow %} target="_blank" rel="nofollow" {%- endif %}>
+    {% include partial/icon.html icon=include.icon %} {{ include.text }}
+</a>

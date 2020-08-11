@@ -1,0 +1,38 @@
+{%- assign search_page = site.search_pages | where: "permalink", include.permalink | first -%}
+{% if include.title %} <p style="text-align: center;"><b>{{ include.title }}</b></p>{% endif %}
+
+<div class="product-grid product-row">
+    {% for product in search_page.page1results | limit: 4 %}
+    {% capture productColor %}rgb({{ product.dominantColor | join: ','}}){% endcapture %}
+    <a href="/{{include.permalink | replace: "shop", "product" }}/{{product.productname | slugify }}-{{ product._id | changebase: 36 }}" target="blank" class="product-tile{%if product.isFeatured %} featured{%endif%}">
+        <div>
+            <figure>
+                <div class="slider product nozoom" style="background: {{ productColor }}">
+                    <div class="slides">
+                        {% for image in product.images %}
+                            {%- include partial/picture.html image=image -%}
+                        {% endfor %}
+                    </div>
+                    <div class="prev"><span style="border-color: {{ productColor }}"></span></div>
+                    <div class="next"><span style="border-color: {{ productColor }}"></span></div>
+                    <!-- <span class="price" style="background: {{ productColor }}">${ priceText }</span> -->
+                </div>
+                <div class="dots">
+                    {% for image in product.images %}
+                        {%- assign isfirstimage = image == product.images[0] -%}
+                        <div class="dot{% if isfirstimage %} active{%endif%}"></div>
+                    {% endfor %}
+                </div>
+                <figcaption>
+                    <span class="title">{{product.productname}}</span><br>
+                </figcaption>
+            </figure>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+{% if include.linktext %}
+<br>
+<p style="text-align: center;"><b><a class="plain" href="/{{ include.permalink }}">{{ include.linktext }}</a></b></p>
+{% endif %}

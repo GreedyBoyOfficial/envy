@@ -1,0 +1,18 @@
+{%- assign recentFeaturedArticles = site.posts | where: "featured", true | limit: 5 -%}
+{%- assign recentFeaturedArticles = site.posts -%}
+<div class="articles-hero">
+    <div class="hero">
+        {% for post in recentFeaturedArticles %}
+            {% include tile.html post=post isFeatured=true %}
+        {% endfor %}
+    </div>
+    <div class="article-list">
+        {% for post in recentFeaturedArticles %}
+        <a href="{{ post.url }}" class="article-list-item {%- if post == recentFeaturedArticles[0] %} active{% endif %}">
+            <span class="tag" style="color: {{post.featured-color}}">{{ post.category }}</span>
+            <h4>{{ post.title }}</h4>
+        </a>
+        {% endfor %}
+        <a href="/articles/" class="view-all">view all stories</a>
+    </div>
+</div>

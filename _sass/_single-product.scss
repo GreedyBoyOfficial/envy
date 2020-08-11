@@ -1,0 +1,26 @@
+.single-product {
+    display: inline-block;
+    padding: 0 36px;
+    height: calc( 100vh - 140px );
+}
+.single-product .product-tile {
+    picture {
+        height: calc( 100vh - 140px ) !important;
+    }
+    img {
+        cursor: auto;
+    }
+
+    // Hide price in description
+    .details span { display: none; }
+
+    // Show price in image
+    .price {
+        display: block !important;
+    }
+}
+@media screen and ( min-width: 1400px ) {
+    .single-product {
+        padding: 0 80px;
+    }
+}

@@ -1,0 +1,43 @@
+---
+# Main SCSS File
+---
+
+$searchBarMaxWidth: {{ site.data.settings.searchBarMaxWidth }};
+
+html, body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.product-embed {
+    padding: 42px 0;
+    h2+div {
+        min-height: 24px;
+    }
+}
+
+.button {
+    padding: 8px 12px 8px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 25px;
+    svg {
+        margin-right: 2px;
+        margin-top: -1px;
+        vertical-align: top;
+    }
+}
+
+@import 'fonts';
+
+@import 'nav';
+@import 'header';
+@import 'article';
+@import 'article-grid';
+@import 'footer';
+
+@import 'home-page';
+@import 'product-search';
+@import 'single-product';
+
+@import 'slider';

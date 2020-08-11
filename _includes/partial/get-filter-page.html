@@ -1,0 +1,4 @@
+{%- assign old_filter_json_part = include.key | append: ':"' | append: include.old_value | append: '"' -%}
+{%- assign new_filter_json_part = include.key | append: ':"' | append: include.new_value | append: '"' -%}
+{%- assign option_filter = include.filter | replace: old_filter_json_part, new_filter_json_part -%}
+{%- assign filter_page = site.search_pages | where: "filter", option_filter | first -%}

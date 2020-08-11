@@ -1,0 +1,28 @@
+---
+layout: page
+---
+
+<article itemscope itemtype="http://schema.org/BlogPosting">
+    {%- assign words = content | strip_html | number_of_words -%}
+    {%- if page.article-caption -%}
+        {%- assign description = page.article-caption | split: '.' | first -%}
+    {%- else -%}
+        {%- assign description = page.description | split: '.' | first -%}
+    {% endif %}
+    {% include header.html
+        url=page.url
+        color=page.featured-color
+        categories=page.categories
+        title=page.title
+        description=description
+        author=page.author
+        publishDate=page.date
+        words=words
+        image=page.featured-image.square
+        alt=page.featured-image.square-alt
+        bottomCutoff=true
+    %}
+    <div itemprop="articleBody" class="content">
+{{ content }}
+    </div>
+</article>

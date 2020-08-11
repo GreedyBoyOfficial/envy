@@ -1,0 +1,14 @@
+<a href="{{ post.url }}" class="article-tile {%- if include.isFeatured == true %} featured{% endif %}" style="background: {{ include.post.featured-color }}">
+    {% if include.isFeatured == true %}
+        {%- include partial/picture.html image=include.post.featured-image.landscape alt=include.post.featuared-image.square-alt %}
+    {% endif %}
+    {%- include partial/picture.html image=include.post.featured-image.square alt=include.post.featured-image.square-alt %}
+    <div class="information">
+        <span class="tag">{{ include.post.categories }}</span>
+        <h3>{{ include.post.title }}</h3>
+        <span class="author">
+            {{site.data.localization.by}}: <strong itemprop="name">{{ include.post.author }}</strong>
+        </span>
+        <time class="time-since-published" itemprop="datePublished" datetime="{{include.post.date}}"></time>
+    </div>
+</a>

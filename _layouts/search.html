@@ -1,0 +1,99 @@
+---
+layout: page
+---
+{%- comment -%}
+    Get search description, cover image, subcategory and category ready
+{%- endcomment -%}
+{%- assign category_array = site.data.shop_categories | where: "name", page.category %}
+{%- assign category = category_array | first -%}
+{% if category == nil %}{% assign category = site.data.default_category %}{% endif %}
+{%- assign description = category.description %}
+{%- assign cover_image = category.cover_image %}
+{%- if page.subcategory %}
+    {% assign subcategory = category.subcategories | where: "name", page.subcategory | first %}
+    {% assign description = subcategory.description %}
+    
+    {% if subcategory.cover_image %}
+        {%- assign cover_image = subcategory.cover_image %}
+    {% endif %}
+{% endif -%}
+{%- if site.data.brands[page.filter_object.brand] %}
+    {% assign description = site.data.brands[page.filter_object.brand].description %}
+    {%- assign cover_image = site.data.brands[page.filter_object.brand].cover_image %}
+{% endif -%}
+
+{%- comment -%}Get the most colorful product to be the image{%- endcomment -%}
+{% assign picked_saturation = 0 %}
+{% assign featured_product = page.page1results[0] -%}
+{% for product in page.page1results %}
+    {%- assign image = product.images[0] %}
+    {%- assign min = product.dominantColor | sort | first %}
+    {%- assign max = product.dominantColor | sort | last %}
+    {%- comment -%}saturation = (max-min)/(max+min){%- endcomment -%}
+    {%- assign top = max | minus: min | times: 1.0 %}
+    {%- assign bottom = max | plus: min | times: 1.0 %}
+    {%- assign saturation = top | divided_by: bottom -%}
+    {%- if saturation > picked_saturation %}
+        {% assign picked_saturation = saturation %}
+        {% assign featured_product = product %}
+    {%- endif %}
+{%- endfor %}
+{% assign featured_image = featured_product.images[0] %}
+{% capture color %}rgb({{featured_product.dominantColor | join: "," }}){% endcapture %}
+
+{% assign prices = page.page1results | map: "price" | map: "number" | uniq | sort %}
+{% capture description %}
+    We found {{ page.total_products }} {{page.title}} ranging from ${{ prices | first }} to ${{ prices | last }}
+{% endcapture %}
+{% include search-header.html
+    color=color
+    categories="search"
+    title=page.title
+    description=description
+    image=featured_image
+    legacy=featured_image
+    alt=post.featured-image-alt
+    bottomCutoff=false
+    isSmall=true
+%}
+<br>
+{%- comment -%} Start filters_in_use at -1 to ignore category as a filter {%- endcomment -%}
+{% assign filters_in_use = -1 %}
+{% for filter in page.filter_object %}
+    {% if filter[1] != "" %}
+        {% assign filters_in_use = filters_in_use | plus: 1 %}
+    {% endif %}
+{% endfor %}
+<div id="f">
+    <div class="mobile-view-toggle">
+        {% include partial/icon.html icon="filter" %}
+        {{ site.data.localization.filters }} {% if filters_in_use > 0 %}({{ filters_in_use }}){% endif %}</div>
+    <div class="popup-info">
+        <h3>{{ site.data.localization.filters | capitalize }}:</h3>
+    </div>
+    <ul>
+        <li class="filter sort has-value">
+            <div class="filter-label">
+                <span class="name">
+                    <span class="emoji">↕️</span>
+                    {{ site.data.localization.sort }}
+                </span>
+                <span class="value">{{ site.data.settings.shop_sort_options[0].name }}</span>
+            </div>
+            <ul class="filter-options"></ul>
+        </li>
+        {% include filters.html %}
+    </ul>
+    <button class="popup-button popup-cancel">
+        {{ site.data.localization.cancel | capitalize }}
+    </button>
+</div>
+{%- comment -%}
+    Render data onto page for JS to render the page
+    
+{%- endcomment -%}
+{%- assign products = page.page1results %}
+<template id="data">{ "cachedProducts": {{ products | jsonify }}, "productsPerPage": {{site.data.settings.products_per_page}}, "query": {{page.query}}, "totalProducts": "{{page.total_products}}", "sort": {{site.data.settings.shop_sort_options | jsonify}}}</template>
+<br style="clear: both;">
+<div class="product-grid"></div>
+<ul id="pagination"></ul>

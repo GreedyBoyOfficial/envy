@@ -1,0 +1,17 @@
+<footer>
+    <a class="logo" href="/">
+        <img src="{{ site.data.settings.logo.svg }}" alt="GreedyBoy Logo" />
+    </a>
+    <ul class="links">
+        {%- for item in include.links %}
+        <li {%- if item.title == "new in" %} class="current-page"{% endif %}><a href="{{ item.url }}">{{ item.emoji }} {{ item.title }}</a></li>
+        {%- endfor %}
+        <li></li>
+    </ul>
+    <ul class="social">
+    {%- for item in site.data.navs.social %}
+        <li><a href="{{ item.url }}">{% include partial/icon.html icon=item.icon %}</a></li>
+    {%- endfor -%}
+    </ul>
+    <p>{{ site.data.settings.copyright }}</p>
+</footer>

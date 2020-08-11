@@ -1,0 +1,10 @@
+<header class="no-cutoff search" data-featured-color="{{ include.color }}">
+    <figure class="featured-image" style="background: {{ include.color }}">
+        {% include partial/picture.html webp=include.webp legacy=include.legacy alt=include.alt filter="c_fit,h_600,w_600/" zoomable=false%}
+    </figure>
+    <div class="information">
+        <span class="tag" style="color: {{ include.color }}">{{ include.categories }}</span>
+        <h1>{{ include.title }}</h1>
+        <p>{{ include.description }}</p>
+    </div>
+</header>

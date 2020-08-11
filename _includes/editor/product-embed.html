@@ -1,0 +1,38 @@
+{%- assign product = include.id | get_product -%}
+
+{%- assign chosen_retailer = product.retailers[0] -%}
+{%- assign price = "$" | append: chosen_retailer.price.regular -%}
+{%- capture dominantColor -%}
+    rgb({{ chosen_retailer.images[0].dominantColor | join: ', ' }})
+{%- endcapture -%}
+{%- assign image1 = chosen_retailer.images[0] -%}
+{%- assign image2 = chosen_retailer.images[1] -%}
+{%- assign image3 = chosen_retailer.images[2] -%}
+{%- assign image4 = chosen_retailer.images[3] -%}
+{%- assign image5 = chosen_retailer.images[4] -%}
+
+{%- if product.description -%}
+    {% assign description = product.description %}
+{%- else -%}
+    {% assign description = chosen_retailer.description %}
+{%- endif -%}
+
+{%- if include.name -%}
+    {% assign title = include.name %}
+{%- else -%}
+    {% assign title = product.name %}
+{%- endif -%}
+
+{% include
+    editor/manual-product-embed.html
+    price=price
+    purchaseURL=chosen_retailer.url
+    purchaseSiteName=chosen_retailer.name
+    productColor=dominantColor
+    image1=image1
+    image2=image2
+    image3=image3
+    image4=image5
+    image4=image5
+    title=title
+    content=description %}

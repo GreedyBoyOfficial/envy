@@ -1,0 +1,74 @@
+    {%- comment -%}For knowledge graph: https://developers.google.com/search/docs/data-types/logo{%- endcomment %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "url": "https://greedyboy.co",
+        "logo": "https://greedyboy.co/assets/images/logo.png"
+    }
+    </script>
+{%- if page.layout == "post" %}
+    {%- if page.description -%}
+        {%- assign description = page.description | truncate: 160 -%}
+    {%- else -%}
+        {%- assign description = page.excerpt | strip_html | truncate: 160 | strip_newlines -%}
+    {%- endif %}
+    <meta itemprop="description" name="description" content="{{ description }}" />
+    <meta property="og:description" content="{% if page.og.description %}{{page.og.description}}{% else %}{{ description }}{% endif %}" />
+    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="{{site.url}}{{ page.url }}" />
+    <meta property="og:image" content="{{ page.featured-image.landscape }}" />
+    <meta property="og:image:alt" content="{% if page.featured-image.landscape-alt %}{{ page.featured-image.landscape-alt }}{% else %}{{page.featured-image.square-alt}}{% endif %}" />
+    <meta name="twitter:image" content="{{ page.featured-image.landscape }}" />
+    <meta name="twitter:card" content="summary_large_image"/>
+{%- elsif page.layout == "page" or page.layout == "archive" %}
+    {%- if page.description -%}
+        {%- assign description = page.description | truncate: 160 -%}
+    {%- else -%}
+        {%- assign description = site.description | truncate: 160 -%}
+    {%- endif %}
+    <meta name="description" content="{{ description }}">
+    <meta itemprop="description" name="description" content="{{ description }}" />
+    <meta property="og:description" content="{% if page.og.description %}{{page.og.description}}{% else %}{{ description }}{% endif %}" />
+    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{site.url}}{{ page.url }}" />
+    <meta property="og:image" content="{{site.url}}{{ page.og.image }}" />
+    <meta property="og:image:alt" content="{% if page.featured-image.landscape-alt %}{{ page.featured-image.landscape-alt }}{% else %}{{page.featured-image.square-alt}}{% endif %}" />
+    <meta name="twitter:image" content="{{ page.featured-image.landscape }}" />
+    <meta name="twitter:card" content="summary_large_image"/>
+{%- elsif page.layout == "search" %}
+    {% assign picked_saturation = 0 %}
+    {% assign featured_product = page.page1results[0] -%}
+    {% for product in page.page1results %}
+        {%- assign image = product.images[0] %}
+        {%- assign min = product.dominantColor | sort | first %}
+        {%- assign max = product.dominantColor | sort | last %}
+        {%- comment -%}saturation = (max-min)/(max+min){%- endcomment -%}
+        {%- assign top = max | minus: min | times: 1.0 %}
+        {%- assign bottom = max | plus: min | times: 1.0 %}
+        {%- assign saturation = top | divided_by: bottom -%}
+        {%- if saturation > picked_saturation %}
+            {% assign picked_saturation = saturation %}
+            {% assign featured_product = product %}
+        {%- endif %}
+    {%- endfor %}
+
+    {% assign brands = page.page1results | map: "brand" | uniq | slice: 0, 3 | array_to_sentence_string %}
+    {%- capture description -%}
+        There are {{ page.total_products }} {{page.title}} that we found from brands like {{ brands }}.
+    {%- endcapture %}
+    <meta name="description" content="{{ description }}">
+    <meta itemprop="description" name="description" content="{{ description }}" />
+    <meta property="og:description" content="{% if page.og.description %}{{page.og.description}}{% else %}{{ description }}{% endif %}" />
+    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{site.url}}{{ page.url }}" />
+    <meta property="og:image" content="{{picked_product.images[0]}}" />
+    <meta property="og:image:alt" content="{{description}}" />
+    <meta name="twitter:image" content="{{picked_product.images[0]}}" />
+    <meta name="twitter:card" content="summary_large_image"/>
+{% else %}
+    {{ page.layout }}
+{%- endif -%}

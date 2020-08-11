@@ -1,0 +1,20 @@
+<figure class="{{ include.embedSize }}">
+    <div class="gallery">
+        <div class="gallery-row">
+            <div class="gallery-image">
+                {% include partial/picture.html image=include.image1 alt=include.image1alt %}
+            </div>
+            {% if include.image2 -%}
+            <div class="gallery-image">
+                {% include partial/picture.html image=include.image2 alt=include.image2alt %}
+            </div>
+            {% endif -%}
+            {%- if include.image3 -%}
+            <div class="gallery-image">
+                {% include partial/picture.html image=include.image3 alt=include.image3alt %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
+</figure>

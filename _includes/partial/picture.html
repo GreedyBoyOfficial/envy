@@ -1,0 +1,26 @@
+{%- if include.image contains "cloudinary.com/greedyboy" %}
+    {%- assign image_ext = include.image | split: "." | reverse | first %}
+    {%- assign image_name = include.image | split: "upload/" | reverse | first | remove: image_ext %}
+    {%- assign image_url = "https://res.cloudinary.com/greedyboy/" -%}
+
+    {%- if include.name -%}
+        {% assign image_url = image_url | append: 'images/' %}
+        {% assign image_name = image_name | remove: '.' | append: '/' | append: include.name | append: '.' %}
+    {%- endif -%}
+    {%- if image_ext == "webp" %}{% assign image_ext = "jpeg" %}{% endif -%}
+    <picture class="lazy {%- if include.zoomable != false %} zoomable {%- endif %}">
+        {%- if include.schemaorg %}<meta itemprop="image" content="{{ include.image }}">{% endif %}
+        <source type="image/webp" srcset="{{ image_url }}c_scale,e_blur:200,w_20/{{ image_name }}webp" data-srcset="{{ image_url }}{{ include.filter }}{{ image_name }}webp">
+        <img src="{{ image_url }}c_scale,e_blur:15,w_15/{{ image_name }}{{ image_ext }}" data-src="{{ image_url }}{{ include.filter }}{{ image_name }}{{ image_ext }}" alt="{{ include.alt }}" {%- if include.maxWidth %} style="max-width: {{include.maxWidth}}" {%- endif %}/>
+    </picture>
+{%- elsif include.image %}
+    <picture class="{%- if include.zoomable != false -%} zoomable {%- endif %}">
+        <img src="{{ include.image }}" alt="{{ include.alt }}">
+    </picture>
+{% else %}
+    <picture class="lazy {%- if include.zoomable != false %} zoomable {%- endif %}">
+        {%- if include.schemaorg %}<meta itemprop="image" content="{{ include.image }}">{% endif %}
+        <source type="image/webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-srcset="{{ include.webp }}">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="{{ include.legacy }}" alt="{{ include.alt }}" {%- if include.maxWidth %} style="max-width: {{include.maxWidth}}" {%- endif %}/>
+    </picture>
+{% endif -%}

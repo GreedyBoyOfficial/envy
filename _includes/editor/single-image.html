@@ -1,0 +1,4 @@
+<figure class="{{ include.embedSize }} single-image">
+    {% include partial/picture.html image=include.image alt=include.alt maxWidth=include.maxWidth zoomable=true %}
+    {% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
+</figure>

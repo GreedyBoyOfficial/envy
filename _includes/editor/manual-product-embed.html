@@ -1,0 +1,68 @@
+{% assign buttonText = "Buy on " | append: include.purchaseSiteName %}
+{% assign slug = include.title | slugify %}
+<div class="product-embed">
+    <figure>
+        <div class="slider product zoomable" {%- if include.productColor %} style="background: {{ include.productColor }}" {%- endif %}>
+            <div class="slides">
+                {%- assign name = slug | append: '-1' -%}
+                {%- if include.image1.webp -%}
+                    {%- include partial/picture.html webp=include.image1.webp legacy=include.image1.legacy name=name zoomable=false -%}
+                {%- elsif include.image1 -%}
+                    {%- include partial/picture.html image=include.image1 name=name zoomable=false -%}
+                {%- endif -%}
+
+                {%- assign name = slug | append: '-2' -%}
+                {%- if include.image2.webp -%}
+                    {%- include partial/picture.html webp=include.image2.webp legacy=include.image2.legacy name=name zoomable=false -%}
+                {%- elsif include.image2 -%}
+                    {%- include partial/picture.html image=include.image2 name=name zoomable=false -%}
+                {%- endif -%}
+
+                {%- assign name = slug | append: '-3' -%}
+                {%- if include.image3.webp -%}
+                    {%- include partial/picture.html webp=include.image3.webp legacy=include.image3.legacy name=name zoomable=false -%}
+                {%- elsif include.image3 -%}
+                    {%- include partial/picture.html image=include.image3 name=name zoomable=false -%}
+                {%- endif -%}
+
+                {%- assign name = slug | append: '-4' -%}
+                {%- if include.image4.webp -%}
+                    {%- include partial/picture.html webp=include.image4.webp legacy=include.image4.legacy name=name zoomable=false -%}
+                {%- elsif include.image4 -%}
+                    {%- include partial/picture.html image=include.image4 name=name zoomable=false -%}
+                {%- endif -%}
+
+                {%- assign name = slug | append: '-5' -%}
+                {%- if include.image5.webp -%}
+                    {%- include partial/picture.html webp=include.image5.webp legacy=include.image5.legacy name=name zoomable=false -%}
+                {%- elsif include.image5 -%}
+                    {%- include partial/picture.html image=include.image5 name=name zoomable=false -%}
+                {%- endif -%}
+            </div>
+            <div class="branded">
+                <span class="tag">greedyboy</span>
+            </div>
+            <div class="prev"><span style="border-color: {{ include.productColor }}"></span></div>
+            <div class="next"><span style="border-color: {{ include.productColor }}"></span></div>
+            <span class="price" style="background: {{ include.productColor }}">{{ include.price }}</span>
+            {% include partial/button.html color=include.productColor text=buttonText href=include.purchaseURL icon="world" nofollow=true %}
+        </div>
+        <div class="dots">
+            {% if include.image1 %}<div class="dot active"></div>{% endif %}
+            {% if include.image2 %}<div class="dot"></div>{% endif %}
+            {% if include.image3 %}<div class="dot"></div>{% endif %}
+            {% if include.image4 %}<div class="dot"></div>{% endif %}
+        </div>
+    </figure>
+    <br>
+    <h2>{{ include.title }}</h2>
+    {% assign markdownLines = include.content | split: "\n" %}
+    <div>
+        {% for line in markdownLines %}
+            {{ line | markdownify }}
+        {% endfor %}
+    </div>
+    <div class="actions">
+        {% include partial/button.html color=include.productColor text=buttonText href=include.purchaseURL icon="world" nofollow=true %}
+    </div>
+</div>

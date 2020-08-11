@@ -1,0 +1,61 @@
+---
+layout: default
+---
+<!DOCTYPE html>
+<html lang="{{site.lang}}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="canonical" href="{{ page.url | prepend: site.url }}">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://greedyboy.b-cdn.net">
+
+    <meta name="theme-color" content="{% if page.featured-color %}{{ page.featured-color }}{% else %}#935FA1{% endif %}" />
+    {%- include seo.html %}
+    <title>{%- if page.title -%}{{ page.title }} | {%endif%}Luxury Men's Fashion | {{ site.title }}</title>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168194742-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-168194742-1');
+    </script>
+
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+</head>
+<body>
+{% include nav.html links=site.data.navs.default %}
+
+{{ content }}
+
+{% include footer.html links=site.data.navs.footer %}
+<div id="cookie">
+    <p>{{ site.data.settings.cookieText }}</p>
+    <span>{{ site.data.settings.cookieSelfDestsructText }}</span>
+</div>
+{% if content contains "img" and page.layout == "post" -%}
+    <script src="{{ '/assets/js/lightense.js' | relative_url }}"></script>
+{%- endif %}
+<script>
+const articles = JSON.parse(`[
+    {%- for post in site.posts %}
+    { "title": "{{ post.title}}", "url": "{{ post.url }}" },
+    {%- endfor %}{"title": "", "url": ""}
+]`);
+const serachPages = JSON.parse(`[
+    {%- for search_page in site.search_pages %}
+    {% if search_page.page1results.size > 0 %}{ "title": "{{ search_page.title }}", "url": "{{ search_page.url }}" },{% endif %}
+    {%- endfor %}{"title": "", "url": ""}
+]`);
+</script>
+<script src="{{ '/assets/js/post.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+{% if page.layout == "search" or page.name == "product-view.html" %}
+    <script src="{{ '/assets/js/animate-css-grid.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
+{% endif %}
+</body>
+</html>
