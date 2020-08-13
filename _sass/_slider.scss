@@ -34,17 +34,17 @@ body.has-scrollbar {
     position: absolute;
     height: 100%;
     top: 0;
-    padding: 16px;
+    padding: 36px;
     cursor: pointer;
 }
 
 .next span, .prev span {
     transition: 0.4s all;
     display: block;
-    width: 8px;
-    height: 8px;
+    width: 18px;
+    height: 18px;
+    top: calc( 50% - 36px );
     position: absolute;
-    top: calc( 50% - 18px );
     border-width: 4px 4px 0 0;
     border-color: #ccc;
     border-style: solid;
@@ -179,17 +179,6 @@ body.has-scrollbar {
             font-weight: 900;
         }
     }
-}
-
-
-@media screen and ( min-width: 1400px ) {
-    .next span, .prev span {
-        width: 18px;
-        height: 18px;
-        top: calc( 50% - 36px );
-    }
-    .prev { padding: 36px; }
-    .next { padding: 36px; }
 }
 
 @media screen and (max-width: 600px) {
