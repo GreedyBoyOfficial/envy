@@ -92,8 +92,8 @@ document.addEventListener("DOMContentLoaded", lazyEvents);
 function slider( sliderElem, slideInterval=-1, onSlideChange=()=>{} ) {
     const numberOfSlides = sliderElem.children.length;
     const getActiveSlide = () => {
-        const slidesLeft = (sliderElem.scrollLeft / sliderElem.parentElement.offsetWidth) + 0.5;
-        const slidesTop = (sliderElem.scrollTop / sliderElem.parentElement.offsetHeight) + 0.5;
+        const slidesLeft = (sliderElem.scrollLeft / sliderElem.offsetWidth) + 0.5;
+        const slidesTop = (sliderElem.scrollTop / sliderElem.offsetHeight) + 0.5;
         return Math.floor( Math.max( slidesLeft, slidesTop ) )
     };
     const gotoSlide = n => {
