@@ -1,0 +1,9 @@
+<figure class="embeded-logos">
+    {% if include.logo1 %}{% include partial/picture.html image=include.logo1 alt=include.logo1alt %}{% endif %}
+    {% if include.logo2 %}{% include partial/picture.html image=include.logo2 alt=include.logo2alt %}{% endif %}
+    {% if include.logo3 %}{% include partial/picture.html image=include.logo3 alt=include.logo3alt %}{% endif %}
+    {% if include.logo4 %}{% include partial/picture.html image=include.logo4 alt=include.logo4alt %}{% endif %}
+    {% if include.logo5 %}{% include partial/picture.html image=include.logo5 alt=include.logo5alt %}{% endif %}
+    {% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
+</figure>
+<br>

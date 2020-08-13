@@ -93,6 +93,21 @@
     min-height: auto !important;
 }
 
+.embeded-logos {
+    text-align: center;
+    height: 100px;
+    picture {
+        vertical-align: middle;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    img {
+        box-sizing: border-box;
+        max-height: 100%;
+        max-width: 200px;
+    }
+}
+
 @media screen and ( min-width: 1400px ) {
     .articles-hero {
         padding-left: 80px;
