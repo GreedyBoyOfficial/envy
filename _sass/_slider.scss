@@ -175,11 +175,8 @@ body.has-scrollbar {
             top: 20px;
             right: 30px;
             opacity: 0.75;
-            .brand {
-                display: block;
-                text-align: right;
-                font-weight: 900;
-            }
+            font-style: italic;
+            font-weight: 900;
         }
     }
 }
@@ -230,9 +227,6 @@ body.has-scrollbar {
         left: 0;
         text-align: center;
         top: 40px !important;
-        .tag {
-            font-size: 14px;
-        }
     }
 
     .dots {
