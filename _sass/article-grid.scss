@@ -74,17 +74,6 @@
         }
     }
 
-    &::before {
-        content: '';
-        z-index: 1;
-        display: block;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        background-image: linear-gradient(-180deg, rgba(0,0,0,0) 10%, rgba(0,0,0,0.30) 90%);
-    }
-
     &:hover {
         top: -8px;
     }
