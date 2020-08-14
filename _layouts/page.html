@@ -13,7 +13,7 @@ layout: default
 
     <meta name="theme-color" content="{% if page.featured-color %}{{ page.featured-color }}{% else %}#935FA1{% endif %}" />
     {%- include seo.html %}
-    <title>{%- if page.title -%}{{ page.title }} | {%endif%}Luxury Men's Fashion | {{ site.title }}</title>
+    <title>{%- if page.title -%}{{ page.title }} | {%endif%} {{ site.data.settings.tagline }} | {{ site.title }}</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168194742-1"></script>
     <script>

@@ -3,8 +3,8 @@
     {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "url": "https://greedyboy.co",
-        "logo": "https://greedyboy.co/assets/images/logo.png"
+        "url": "{{ site.url }}",
+        "logo": "{{ site.url }}/assets/images/logo.png"
     }
     </script>
 {%- if page.layout == "post" %}
@@ -57,7 +57,7 @@
 
     {% assign brands = page.page1results | map: "brand" | uniq | slice: 0, 3 | array_to_sentence_string %}
     {%- capture description -%}
-        There are {{ page.total_products }} {{page.title}} that we found from brands like {{ brands }}.
+        {{ site.data.localization.we-found | capitalize }} {{ page.total_products }} {{ page.title | downcase }} {{ site.data.localization.ranging-from }} ${{ prices | first }} {{ site.data.localization.to }} ${{ prices | last }}
     {%- endcapture %}
     <meta name="description" content="{{ description }}">
     <meta itemprop="description" name="description" content="{{ description }}" />
