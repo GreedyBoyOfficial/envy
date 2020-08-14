@@ -298,7 +298,7 @@ function renderProducts({ productContainer, products }){
         products.map( product => {
             const productIdHex = parseInt(product._id.slice(0,-4)).toString(36);
             const slugifiedName = slugify( product.productname );
-            const path = "product/"+window.location.pathname.split("/").slice(2).join("/")
+            const path = localization.product+"/"+window.location.pathname.split("/").slice(2).join("/")
             try {
                 return renderProduct( product, { url: window.origin+"/"+path+"/"+slugifiedName+"-"+productIdHex } );
             } catch (error) {

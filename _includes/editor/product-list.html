@@ -4,7 +4,7 @@
 <div class="product-grid product-row">
     {% for product in search_page.page1results | limit: 4 %}
     {% capture productColor %}rgb({{ product.dominantColor | join: ','}}){% endcapture %}
-    <a href="/{{include.permalink | replace: "shop", "product" }}/{{product.productname | slugify }}-{{ product._id | changebase: 36 }}" target="blank" class="product-tile{%if product.isFeatured %} featured{%endif%}">
+    <a href="/{{include.permalink | replace: site.data.localization.shop, site.data.localization.product }}/{{product.productname | slugify }}-{{ product._id | changebase: 36 }}" target="blank" class="product-tile{%if product.isFeatured %} featured{%endif%}">
         <div>
             <figure>
                 <div class="slider product nozoom" style="background: {{ productColor }}">
