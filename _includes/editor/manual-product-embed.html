@@ -1,4 +1,4 @@
-{% assign buttonText = "Buy on " | append: include.purchaseSiteName %}
+{% assign buttonText = site.data.localization.buy-on | capitalize | append: " " | append: include.purchaseSiteName %}
 {% assign slug = include.title | slugify %}
 <div class="product-embed">
     <figure>

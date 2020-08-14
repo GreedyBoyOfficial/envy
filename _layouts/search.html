@@ -43,11 +43,11 @@ layout: page
 
 {% assign prices = page.page1results | map: "price" | map: "number" | uniq | sort %}
 {% capture description %}
-    We found {{ page.total_products }} {{page.title}} ranging from ${{ prices | first }} to ${{ prices | last }}
+    {{ site.data.localization.we-found | capitalize }} {{ page.total_products }} {{ page.title | downcase }} {{ site.data.localization.ranging-from }} ${{ prices | first }} {{ site.data.localization.to }} ${{ prices | last }}
 {% endcapture %}
 {% include search-header.html
     color=color
-    categories="search"
+    categories=site.data.localization.search
     title=page.title
     description=description
     image=featured_image
