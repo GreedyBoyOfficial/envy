@@ -115,7 +115,7 @@ function copyProductURLEvent( { target } ){
     console.log( success )
     if ( success ) {
         const before = target.innerHTML;
-        target.innerHTML = "✔️ copied!";
+        target.innerHTML = `✔️ ${ localization.copied }!`;
         setTimeout( () => target.innerHTML = before, 5000 )
     }
 }
@@ -186,9 +186,9 @@ function renderProduct( product, options ) {
             <p>${description.replace(/\n/g, "<br>")}</p>
             <a class="button" href="${product.linkurl}" style="background: ${contrastingProductColor}" target="_blank" rel="nofollow">
                 <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs></defs><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-359.000000, -2495.000000)"><g transform="translate(345.000000, 2489.000000)"><g transform="translate(12.000000, 4.000000)"><polygon points="0 0 24 0 24 24 0 24"></polygon><path d="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M11,19.93 C7.05,19.44 4,16.08 4,12 C4,11.38 4.08,10.79 4.21,10.21 L9,15 L9,16 C9,17.1 9.9,18 11,18 L11,19.93 Z M17.9,17.39 C17.64,16.58 16.9,16 16,16 L15,16 L15,13 C15,12.45 14.55,12 14,12 L8,12 L8,10 L10,10 C10.55,10 11,9.55 11,9 L11,7 L13,7 C14.1,7 15,6.1 15,5 L15,4.59 C17.93,5.78 20,8.65 20,12 C20,14.08 19.2,15.97 17.9,17.39 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path></g></g></g></g></svg>
-                Buy on ${product.merchantname}
+                ${ ((string) => string.charAt(0).toUpperCase() + string.slice(1))(localization.buyOn) } ${product.merchantname}
             </a>
-            <div class="share-links" onclick="${ useShare ? "share" : "copy"}ProductURLEvent(event)" data-title="${product.productname}" data-url="${options.url}" data-text="View this product on GreedyBoy">${ useShare ? "🔗 share product" : "🔗 copy link"}</div>
+            <div class="share-links" onclick="${ useShare ? "share" : "copy"}ProductURLEvent(event)" data-title="${product.productname}" data-url="${options.url}" data-text="View this product on GreedyBoy">🔗 ${ useShare ? localization.shareProduct : localization.copyLink }</div>
         </div>
     </div></div>`
 }

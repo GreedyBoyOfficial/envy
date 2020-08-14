@@ -40,6 +40,7 @@ layout: default
     <script src="{{ '/assets/js/lightense.js' | relative_url }}"></script>
 {%- endif %}
 <script>
+const localization = JSON.parse(`{{ site.data.localization | jsonify }}`);
 const articles = JSON.parse(`[
     {%- for post in site.posts %}
     { "title": "{{ post.title}}", "url": "{{ post.url }}" },
