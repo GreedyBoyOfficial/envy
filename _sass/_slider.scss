@@ -194,7 +194,7 @@ body.has-scrollbar {
         text-align: center
     }
 
-    .product.slider picture {
+    figure:not(.fullscreen) > .product.slider picture {
         height: auto;
         max-height: 90vh;
     }
