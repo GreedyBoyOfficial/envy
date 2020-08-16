@@ -39,18 +39,18 @@ layout: default
 {% if content contains "img" and page.layout == "post" -%}
     <script src="{{ '/assets/js/lightense.js' | relative_url }}"></script>
 {%- endif %}
+{% assign exchangerates = site.data.localization.CURRENCY | currencyexchangerates %}
 <script>
-const localization = JSON.parse(`{{ site.data.localization | jsonify }}`);
-const articles = JSON.parse(`[
-    {%- for post in site.posts %}
+const exchangerates = {{ exchangerates | jsonify }}
+const localization = {{ site.data.localization | jsonify }}
+const articles = [
+    {%- for post in site.posts -%}
     { "title": "{{ post.title}}", "url": "{{ post.url }}" },
-    {%- endfor %}{"title": "", "url": ""}
-]`);
-const serachPages = JSON.parse(`[
-    {%- for search_page in site.search_pages %}
-    {% if search_page.page1results.size > 0 %}{ "title": "{{ search_page.title }}", "url": "{{ search_page.url }}" },{% endif %}
-    {%- endfor %}{"title": "", "url": ""}
-]`);
+    {%- endfor %}{"title": "", "url": ""}];
+const serachPages =[
+    {%- for search_page in site.search_pages -%}
+    {%- if search_page.page1results.size > 0 %}{ "title": "{{ search_page.title }}", "url": "{{ search_page.url }}" },{% endif -%}
+    {%- endfor %}{"title": "", "url": "" }];
 </script>
 <script src="{{ '/assets/js/post.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/main.js' | relative_url }}"></script>

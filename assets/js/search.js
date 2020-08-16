@@ -137,18 +137,21 @@ const renderImage = ({ background, legacy, alt }) => {
     </picture>`
 }
 
+const roundedNumberWithCommas = (x) => {
+    return Math.ceil(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 function renderProduct( product, options ) {
     options = options ? options : {};
     const productColor = 'rgb('+ product.dominantColor.join(',') +')';
     const contrastingProductColor = 'rgb('+ generateContrastingColor(...product.dominantColor).join(',') +')';
 
-    let currencySign = product.price.currency;
-    if ( product.price.currency == "USD" ) currencySign = "$";
-    if ( product.price.currency == "GBP" ) currencySign = "£";
+    let convertedPrice = roundedNumberWithCommas( product.price.number / exchangerates.rates[product.price.currency] );
 
-    let priceText = currencySign + product.price.number;
+    let priceText = localization.CURRENCY_SIGN + convertedPrice;
     if ( product.saleprice.percent !== 0 ) {
-        priceText = "<b>"+currencySign + product.saleprice.number + "</b> <s><span>"+ priceText +"</span></s> "
+        let convertedSalePrice = roundedNumberWithCommas( product.saleprice.number / exchangerates.rates[product.price.currency] );
+        priceText = "<b>"+localization.CURRENCY_SIGN + convertedSalePrice + "</b> <s><span>"+ priceText +"</span></s> "
     }
 
     let description = product.description.short.length > product.description.long.length ? 

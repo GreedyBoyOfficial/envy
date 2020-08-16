@@ -42,8 +42,9 @@ layout: page
 {% capture color %}rgb({{featured_product.dominantColor | join: "," }}){% endcapture %}
 
 {% assign prices = page.page1results | map: "price" | map: "number" | uniq | sort %}
+{% assign exchangerates = site.data.localization.CURRENCY | currencyexchangerates %}
 {% capture description %}
-    {{ site.data.localization.weFound | capitalize }} {{ page.total_products }} {{ page.title | downcase }} {{ site.data.localization.ranging-from }} ${{ prices | first }} {{ site.data.localization.to }} ${{ prices | last }}
+    {{ site.data.localization.weFound | capitalize }} {{ page.total_products }} {{ page.title | downcase }} {{ site.data.localization.ranging-from }} ${{ prices | first | divided_by: exchangerates.rates.USD | ceil }} {{ site.data.localization.to }} ${{ prices | last | divided_by: exchangerates.rates.USD | ceil }}
 {% endcapture %}
 {% include search-header.html
     color=color
