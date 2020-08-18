@@ -1,10 +1,10 @@
 function timeSinceDate(date, lang) {
     function render(n, unit) {
+        unit = localization[unit + ((n == 1) ? "" : "s")];
         if ( lang == "es" ) {
-            unit = { year: "año", month: "mes", week: "semana", day: "dia" }[unit];
-            return "hasta " + n + " " + unit + ((n == 1) ? "" : "s");;
+            return localization.ago + " " + n + " " + unit;;
         }
-        return n + " " + unit + ((n == 1) ? "" : "s") + " ago";
+        return n + " " + unit + " " + localization.ago;
     }
 
     var seconds = Math.floor((new Date() - date) / 1000);
