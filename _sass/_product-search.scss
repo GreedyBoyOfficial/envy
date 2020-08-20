@@ -72,6 +72,15 @@
         height: 0;
         overflow: hidden;
         transition: 0.4s opacity;
+        display: grid !important;
+        grid-gap: 0;
+        grid-template-rows: auto auto auto auto auto auto auto auto auto;
+        grid-template-columns: auto auto auto auto auto auto;
+        grid-auto-flow: column dense;
+        li {
+            display: inline-block;
+            padding: 0 16px;
+        }
     }
     &:hover .filter-options {
         top: 46px;
@@ -186,7 +195,7 @@
 }
 
 .share-links {
-    display: inline-block;
+    display: block;
     margin-top: 8px;
     margin-right: 24px;
     float: right;
