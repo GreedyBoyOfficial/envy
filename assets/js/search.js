@@ -160,7 +160,8 @@ function renderProduct( product, options ) {
     if ( product.description.custom ) {
         description = product.description.custom;
     }
-    if ( product.localization[options.language] ) {
+    if ( product.localization && product.localization[options.language] ) {
+        console.log( product.localization[options.language] );
         productName = product.localization[options.language].productname;
 
         if ( product.localization[options.language].description ) {
