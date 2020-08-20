@@ -355,7 +355,10 @@
                 background: #eee;
             }
             .filter-options {
-                display: block
+                display: block !important;
+                li {
+                    display: block;
+                }
             }
         }
         .name, .value {
@@ -383,7 +386,7 @@
     }
     .filter-options {
         background: none;
-        display: none;
+        display: none !important;
         overflow: auto;
         height: auto;
         opacity: 1;
