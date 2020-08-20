@@ -142,6 +142,8 @@ const roundedNumberWithCommas = (x) => {
 }
 
 function renderProduct( product, options ) {
+    const language = document.querySelector("html").getAttribute("lang");
+    
     options = options ? options : {};
     const productColor = 'rgb('+ product.dominantColor.join(',') +')';
     const contrastingProductColor = 'rgb('+ generateContrastingColor(...product.dominantColor).join(',') +')';
@@ -160,12 +162,13 @@ function renderProduct( product, options ) {
     if ( product.description.custom ) {
         description = product.description.custom;
     }
-    if ( product.localization && product.localization[options.language] ) {
-        console.log( product.localization[options.language] );
-        productName = product.localization[options.language].productname;
+    console.log( product.localization, language )
+    if ( product.localization && product.localization[language] ) {
+        console.log( product.localization[language] );
+        productName = product.localization[language].productname;
 
-        if ( product.localization[options.language].description ) {
-            description = product.localization[options.language].description;
+        if ( product.localization[language].description ) {
+            description = product.localization[language].description;
         }
     }
 
@@ -306,15 +309,13 @@ function slugify (str) {
 }
 
 function renderProducts({ productContainer, products }){
-    const language = document.querySelector("html").getAttribute("lang");
-
     productContainer.innerHTML = 
         products.map( product => {
             const productIdHex = parseInt(product._id.slice(0,-4)).toString(36);
             const slugifiedName = slugify( product.productname );
             const path = localization.product+"/"+window.location.pathname.split("/").slice(2).join("/")
             try {
-                return renderProduct( product, { url: window.origin+"/"+path+"/"+slugifiedName+"-"+productIdHex, language } );
+                return renderProduct( product, { url: window.origin+"/"+path+"/"+slugifiedName+"-"+productIdHex } );
             } catch (error) {
                 console.error( error );
                 return "";
