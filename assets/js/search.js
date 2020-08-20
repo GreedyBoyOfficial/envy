@@ -176,12 +176,13 @@ function renderProduct( product, options ) {
     const browerCanShare = !!navigator.share;
     const useShare = isTouchScreen && browerCanShare;
 
-    return `<div class="product-tile${ product.isFeatured ? " featured" : '' }${ options.expanded ? " product-tile--expanded" : "" }${ options.wide ? " product-tile--wide" : "" }">
+    return `<div class="product-tile${ product.isFeatured ? " featured" : '' }${ options.expanded ? " product-tile--expanded" : "" }${ options.wide ? " product-tile--wide" : "" }" itemscope itemtype="http://schema.org/Product">
     <div>
         <figure>
             <div class="slider product" style="background: ${productColor}">
+                <span itemprop="image" content="${product.images[0]}"></span>
                 <div class="slides">
-                    ${ product.images.map( image => renderImage({ background: product.backgroundColor, legacy: image, alt: product.name }) ).join('') }
+                    ${ product.images.map( image => renderImage({ background: product.backgroundColor, legacy: image, alt: product.productname }) ).join('') }
                 </div>
                 <div class="prev"><span style="border-color: ${contrastingProductColor}"></span></div>
                 <div class="next"><span style="border-color: ${contrastingProductColor}"></span></div>
@@ -196,9 +197,15 @@ function renderProduct( product, options ) {
         </figure>
         <div class="details">
             <br>
-            <h3 class="title">${productName}</h3>
-            <span>${ priceText }</span> 
-            <p>${description.replace(/\n/g, "<br>")}</p>
+            <h3 class="title" itemprop="name">${productName}</h3>
+            <span itemprop="sku" content="${product.sku}" /> 
+            <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                <span itemprop="priceCurrency" content="${localization.CURRENCY}"></span>
+                <link itemprop="url" href="${options.url}" />
+                <span>${ priceText }</span>
+                <span itemprop="price" content="${convertedPrice.replace(/[^0-9\.]/g, '')}"></span> 
+            </span>
+            <p itemprop="description">${description.replace(/\n/g, "<br>")}</p>
             <a class="button" href="${product.linkurl}" style="background: ${contrastingProductColor}" target="_blank" rel="nofollow">
                 <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs></defs><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-359.000000, -2495.000000)"><g transform="translate(345.000000, 2489.000000)"><g transform="translate(12.000000, 4.000000)"><polygon points="0 0 24 0 24 24 0 24"></polygon><path d="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M11,19.93 C7.05,19.44 4,16.08 4,12 C4,11.38 4.08,10.79 4.21,10.21 L9,15 L9,16 C9,17.1 9.9,18 11,18 L11,19.93 Z M17.9,17.39 C17.64,16.58 16.9,16 16,16 L15,16 L15,13 C15,12.45 14.55,12 14,12 L8,12 L8,10 L10,10 C10.55,10 11,9.55 11,9 L11,7 L13,7 C14.1,7 15,6.1 15,5 L15,4.59 C17.93,5.78 20,8.65 20,12 C20,14.08 19.2,15.97 17.9,17.39 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path></g></g></g></g></svg>
                 ${ ((string) => string.charAt(0).toUpperCase() + string.slice(1))(localization.buyOn) } ${product.merchantname}
@@ -315,7 +322,7 @@ function renderProducts({ productContainer, products }){
             const slugifiedName = slugify( product.productname );
             const path = localization.product+"/"+window.location.pathname.split("/").slice(2).join("/")
             try {
-                return renderProduct( product, { url: window.origin+"/"+path+"/"+slugifiedName+"-"+productIdHex } );
+                return renderProduct( product, { url: window.origin+"/"+path+""+slugifiedName+"-"+productIdHex } );
             } catch (error) {
                 console.error( error );
                 return "";
