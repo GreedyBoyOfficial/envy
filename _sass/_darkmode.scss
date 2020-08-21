@@ -1,0 +1,36 @@
+body, header:not(.no-cutoff)::after,
+.international, div.search, div.search input {
+    background: rgb(51,51,51) !important;
+}
+
+.product.slider picture {
+    background: rgb(51,51,51) !important;
+}
+
+#f {
+    background: rgba(51, 51, 51, 0.8) !important;
+}
+
+.logo img {
+     filter: invert(100%);
+}
+
+body > *:not(#MagiCSS-bookmarklet) * {
+    color: #ffffff !important
+}
+svg path:not([fill="none"]) {
+    fill: #fff !important;
+}
+
+body #f  *, .branded {
+    color: #000 !important;
+}
+
+ul.links li.current-page::after,
+.international:hover ul li a:hover,
+ul.links li:hover::after,
+div.search .results a:hover::before {
+    background: #444
+}
+
+// TODO: Mobile
