@@ -15,14 +15,16 @@ layout: default
     {%- include seo.html %}
     <title>{%- if page.title -%}{{ page.title }} | {%endif%} {{ site.data.settings.tagline }} | {{ site.title }}</title>
     
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168194742-1"></script>
+    {% if site.data.settings.gaCode -%}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-{{ site.data.settings.gaCode }}"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'UA-168194742-1');
+        gtag('config', '{{ site.data.settings.gaCode }}');
     </script>
+    {%- endif %}
 
     <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
 </head>
