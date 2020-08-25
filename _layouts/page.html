@@ -16,7 +16,7 @@ layout: default
     <title>{%- if page.title -%}{{ page.title }} | {%endif%} {{ site.data.settings.tagline }} | {{ site.title }}</title>
     
     {% if site.data.settings.gaCode -%}
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-{{ site.data.settings.gaCode }}"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.data.settings.gaCode }}"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
