@@ -114,15 +114,21 @@ function slider( sliderElem, slideInterval=-1, onSlideChange=()=>{} ) {
     const nextSlide = () => gotoSlide(
         (getActiveSlide() + 1) % numberOfSlides
     );
+    const activeSlideIsHoveredOn = () => {
+        const activeSlideElem = sliderElem.children[getActiveSlide()];
+        return activeSlideElem.matches(":hover");
+    }
 
-    let slideTimer,
-      resetTimer = ()=>{};
+    let slideTimer, setTimer = ()=>{};
     if ( slideInterval > 0 ) {
-        slideTimer = setInterval(nextSlide, slideInterval);
-        resetTimer = () => {
+        setTimer = () => {
             clearInterval(slideTimer);
-            slideTimer = setInterval(nextSlide, slideInterval);
+            slideTimer = setInterval(function(){
+                if ( !activeSlideIsHoveredOn() ) nextSlide();
+            }, slideInterval);
         }
+
+        setTimer();
     }
 
     const onScroll = function(){
@@ -147,7 +153,7 @@ function slider( sliderElem, slideInterval=-1, onSlideChange=()=>{} ) {
             });
         }
 
-        resetTimer();
+        setTimer();
     }
 
     if ( prev ) prev.onclick = () => prevSlide();
