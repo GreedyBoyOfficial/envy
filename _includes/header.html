@@ -12,7 +12,7 @@
         <span class="description">{{ include.description }}</span>
         {%if include.author-%}
             <span class="author" itemscope="" itemprop="author" itemtype="http://schema.org/Person">
-                {% if include.post.editor-%}{{ site.data.localization.writtenBy}}{%else%}{{ site.data.localization.by }}{% endif %}: <strong itemprop="name">{{ include.author }}</strong> {%if include.editor-%} &nbsp; {{- site.data.localization.editedBy }}: <strong>{{ include.editor }}</strong>{%- endif %}
+                {% if include.editor-%}{{ site.data.localization.writtenBy}}{%else%}{{ site.data.localization.by }}{% endif %}: <strong itemprop="name">{{ include.author }}</strong> {%if include.editor-%} &nbsp; {{- site.data.localization.editedBy }}: <strong>{{ include.editor }}</strong>{%- endif %}
             </span>
         {% else -%}
             <br>

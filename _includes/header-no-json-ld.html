@@ -9,7 +9,7 @@
         <h1>{{ include.title }}</h1>
         <span class="description">{{ include.description }}</span>
         <span class="author">
-            {% if include.post.editor-%}{{ site.data.localization.writtenBy}}{%else%}{{ site.data.localization.by }}{% endif %}: <strong>{{ include.author }}</strong> {%if include.editor-%} &nbsp; {{- site.data.localization.editedBy }}: <strong>{{ include.editor }}</strong>{%- endif %}
+            {% if include.editor-%}{{ site.data.localization.writtenBy}}{%else%}{{ site.data.localization.by }}{% endif %}: <strong>{{ include.author }}</strong> {%if include.editor-%} &nbsp; {{- site.data.localization.editedBy }}: <strong>{{ include.editor }}</strong>{%- endif %}
         </span>
         <time class="time-since-published" datetime="{{include.publishDate}}"></time>
         <time datetime="{% if include.modifiedDate %}{{ include.modifiedDate }}{% else %}{{include.publishDate}}{% endif %}"></time>
