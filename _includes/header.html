@@ -17,8 +17,8 @@
         {% else -%}
             <br>
         {%- endif %}
-        <time class="time-since-published" itemprop="datePublished" datetime="{{include.publishDate}}"></time>
-        <time itemprop="dateModified" datetime="{% if include.modifiedDate %}{{ include.modifiedDate }}{% else %}{{include.publishDate}}{% endif %}"></time>
+        <time class="time-since-published" itemprop="datePublished" datetime="{{ include.publishDate | date: "%Y-%m-%d %H:%M" }}"></time>
+        <time itemprop="dateModified" datetime="{% if include.modifiedDate %}{{ include.modifiedDate  | date: "%Y-%m-%d %H:%M" }}{% else %}{{include.publishDate}}{% endif %}"></time>
 
         {% if include.words %}<span class="reading-time">
             <svg class="icon" width="12px" height="15px" viewBox="0 0 12 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs></defs><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-2.000000, 0.000000)"><polygon points="0 0 16 0 16 16 0 16"></polygon><path d="M10,0.666666667 L6,0.666666667 L6,2 L10,2 L10,0.666666667 Z M7.33333333,9.33333333 L8.66666667,9.33333333 L8.66666667,5.33333333 L7.33333333,5.33333333 L7.33333333,9.33333333 Z M12.6866667,4.92666667 L13.6333333,3.98 C13.3466667,3.64 13.0333333,3.32 12.6933333,3.04 L11.7466667,3.98666667 C10.7133333,3.16 9.41333333,2.66666667 8,2.66666667 C4.68666667,2.66666667 2,5.35333333 2,8.66666667 C2,11.98 4.68,14.6666667 8,14.6666667 C11.32,14.6666667 14,11.98 14,8.66666667 C14,7.25333333 13.5066667,5.95333333 12.6866667,4.92666667 Z M8,13.3333333 C5.42,13.3333333 3.33333333,11.2466667 3.33333333,8.66666667 C3.33333333,6.08666667 5.42,4 8,4 C10.58,4 12.6666667,6.08666667 12.6666667,8.66666667 C12.6666667,11.2466667 10.58,13.3333333 8,13.3333333 Z" fill="#000000" fill-rule="nonzero"></path></g></g></svg>
