@@ -9,6 +9,6 @@
         <span class="author">
             {%if include.post.editor-%}{{ site.data.localization.writtenBy}}{%else%}{{ site.data.localization.by }}{% endif %}: <strong itemprop="name">{{ include.post.author }}</strong> {%if include.post.editor-%} &nbsp; {{- site.data.localization.editedBy }}: <strong>{{ include.post.editor }}</strong>{%- endif %}
         </span>
-        <time class="time-since-published" itemprop="datePublished" datetime="{{include.post.date}}"></time>
+        <time class="time-since-published" itemprop="datePublished" datetime="{{include.post.date }}"></time>
     </div>
 </a>

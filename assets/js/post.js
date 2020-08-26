@@ -21,12 +21,13 @@ function timeSinceDate(date, lang) {
     const days = Math.floor(seconds / (60 * 60 * 24));
     if ( days ) return render( days, "day" );
     
-    return "brand new"
+    return localization.brandNew
 }
 
 const lang = document.body.parentElement.getAttribute("lang");
 
 [...document.querySelectorAll(".time-since-published")].forEach( timeElem => {
+    console.log( timeElem.getAttribute("datetime") )
     const date = Date.parse(timeElem.getAttribute("datetime"));
     timeElem.innerHTML = timeSinceDate(date, lang);
 });
