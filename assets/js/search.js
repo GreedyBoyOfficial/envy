@@ -10,6 +10,53 @@ async function getProducts ( {match, limit, skip, sort} ) {
     return response.json();
 }
 
+const testProduct = {
+    "_id": "3376348824720812",
+    "merchantname": "LN-CC UK",
+    "productname": "Marsèll Pallottola Derby Shoes in Black",
+    "price": {
+      "number": 375,
+      "currency": "GBP"
+    },
+    "saleprice": {
+      "number": 188,
+      "currency": "GBP",
+      "percent": 50
+    },
+    "description": {
+      "short": "",
+      "long": "Marsèll champions unconventional luxury footwear and accessories inspired by heritage. The Pallottola Derby Shoes are crafted from leather in a suede finish, featuring lace-up fastening, round toe, texturisded rubber sole and branded insole. Leather in a suede finish Lace-up fastening Round toe Texturised rubber sole Branded insole Classic design Made in Italy"
+    },
+    "linkurl": "http://click.linksynergy.com/link?id=n*ylpS5NH00&offerid=670250.16259887064&type=15&murl=https%3A%2F%2Fwww.ln-cc.com%2Fen%2Fmen%2Fshoes%2Flace-ups%2Fpallottola-derby-shoes-in-black-098053281448049.html%3Fkeeplocale%3Dtrue%26Country%3DGB",
+    "images": [
+      "https://production-store-thelevelgroup.demandware.net/dw/image/v2/AAGA_PRD/on/demandware.static/-/Sites-09/default/dw719a0a8e/images/zoom/mar0139001_blk_00.jpg",
+      "https://production-store-thelevelgroup.demandware.net/dw/image/v2/AAGA_PRD/on/demandware.static/-/Sites-09/default/dw719a0a8e/images/zoom/mar0139001_blk_01.jpg",
+      "https://production-store-thelevelgroup.demandware.net/dw/image/v2/AAGA_PRD/on/demandware.static/-/Sites-09/default/dw719a0a8e/images/zoom/mar0139001_blk_02.jpg",
+      "https://production-store-thelevelgroup.demandware.net/dw/image/v2/AAGA_PRD/on/demandware.static/-/Sites-09/default/dw719a0a8e/images/zoom/mar0139001_blk_03.jpg",
+      "https://production-store-thelevelgroup.demandware.net/dw/image/v2/AAGA_PRD/on/demandware.static/-/Sites-09/default/dw719a0a8e/images/zoom/mar0139001_blk_04.jpg"
+    ],
+    "dominantColor": [
+      38,
+      34,
+      32
+    ],
+    "backgroundColor": "#e3e3e1"
+  }
+
+async function getSearchPageFromSlug( slug ) {
+    return {
+        "title": "Hello World",
+        "description": "Lorem ipsum dolor sit amet",
+        "products": [ testProduct ],
+        "filter": {},
+        "query": {},
+        "totalProducts": 412,
+    }
+    // const query = encodeURIComponent(JSON.stringify({ slug }))
+    // const response = await fetch("/api/get-search-page-from-slug?query="+query);
+    // return response.json();
+}
+
 async function getResults({ pageNum, sort, excludeIds=[], productsPerPage, query }) {
 
     if ( excludeIds.length ) {
@@ -215,12 +262,12 @@ function renderProduct( product, options ) {
     </div></div>`
 }
 
-function filterEvents({ sortOptions, sort, includeSectionFilter }) {
+function filterEvents({ sortOptions, sortMode, includeSectionFilter }) {
     
     // Set the sort filters value
     const sortFilter = document.querySelector('.filter.sort');
 
-    sortFilter.querySelector(".value").innerHTML = " " + sortOptions[sort].name;
+    sortFilter.querySelector(".value").innerHTML = " " + sortOptions[sortMode].name;
 
     // Get the options for the sort filter
     let sortFilterOptions = '';
@@ -228,7 +275,7 @@ function filterEvents({ sortOptions, sort, includeSectionFilter }) {
 
         // Don't include the selected option
         // in the options list
-        if ( i == sort ) continue;
+        if ( i == sortMode ) continue;
 
         // Generate the url for each filter
         let url = new URL( window.location.href );
@@ -395,36 +442,25 @@ function renderSearchHeader({ color, image, title, description }){
     </header>`
 }
 
-(async function(){
-    if ( !document.getElementById("data") ) return;
-
-    // Get all querystring parameters
-    const params = new URLSearchParams(window.location.search);
-    const pageNum = params.get('p') ? parseInt(params.get('p')) : 1;
-    const sort = params.get('s') ? params.get('s') : 0;
-    const includeSectionFilter = params.get("n") == 1;
-
-    // Get all cached data
-    const data = JSON.parse( document.getElementById("data").innerHTML );
-
+async function generateSearchPage( data, { pageNum, sortMode, includeSectionFilter } ){
     let results;
-    if ( pageNum == 1 && sort == 0 ) {
+    if ( pageNum == 1 && sortMode == 0 ) {
 
         // If we're on the first page with default
         // sorting, use the cached products
-        results = data.cachedProducts;
+        results = data.products;
 
-    } else if ( pageNum > 1 && sort == 0 ) {
+    } else if ( pageNum > 1 && sortMode == 0 ) {
 
-        // If sort is 0 then the first page of results
+        // If sortMode is 0 then the first page of results
         // were cached, exclude cached items and treat
         // second page as first to compensate
         results = await getResults({
             pageNum: pageNum-1,
-            excludeIds: data.cachedProducts.map( product => product._id ),
+            excludeIds: data.products.map( product => product._id ),
             productsPerPage: data.productsPerPage,
             query: data.query,
-            sort: data.sort[sort].query
+            sortMode: data.sort[sortMode].query
         });
     } else {
 
@@ -433,7 +469,7 @@ function renderSearchHeader({ color, image, title, description }){
             pageNum,
             productsPerPage: data.productsPerPage,
             query: data.query,
-            sort: data.sort[sort].query
+            sort: data.sort[sortMode].query
         });
     }
 
@@ -456,7 +492,7 @@ function renderSearchHeader({ color, image, title, description }){
     // TODO: Render this
     filterEvents({
         sortOptions: data.sort,
-        sort,
+        sortMode,
         includeSectionFilter
     });
 
@@ -471,5 +507,31 @@ function renderSearchHeader({ color, image, title, description }){
         totalProducts: data.totalProducts,
         currentPage: pageNum ? pageNum : 1
     });
-    
+}
+
+(async function(){
+    // Every search page has this data elem
+    if ( !document.getElementById("data") ) return;
+
+    // Get all querystring parameters
+    const params = new URLSearchParams(window.location.search);
+    const pageNum = params.get('p') ? parseInt(params.get('p')) : 1;
+    const sortMode = params.get('s') ? params.get('s') : 0;
+    const includeSectionFilter = params.get("n") == 1;
+
+    // Get all cached data
+    let data = JSON.parse( document.getElementById("data").innerHTML );
+
+    if ( `/${data.slug}` != window.location.pathname ) {
+        // Get options for window.location.pathname
+        const page = await getSearchPageFromSlug( window.location.pathname );
+        // If options dont exist, throw 404
+        data = { ...data, ...page }
+        // Otherwise render page
+        console.log( data )
+        console.log("Render search page");
+    }
+
+    generateSearchPage( data, { pageNum, sortMode, includeSectionFilter } );
+
 })();

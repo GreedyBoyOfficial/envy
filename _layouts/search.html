@@ -94,7 +94,7 @@ layout: page
     Render data onto page for JS to render the page
 {%- endcomment -%}
 {%- assign products = page.page1results %}
-<template id="data">{ "title": "{{ page.title }}", "description": "{{ description | strip_newlines }}", "cachedProducts": {{ products | jsonify }}, "productsPerPage": {{site.data.settings.products_per_page}}, "filter": {{ page.filter }}, "query": {{page.query}}, "totalProducts": "{{page.total_products}}", "sort": {{site.data.settings.shop_sort_options | jsonify}}}</template>
+<template id="data">{ "slug": "{{ page.permalink }}", "title": "{{ page.title }}", "description": "{{ description | strip_newlines }}", "products": {{ products | jsonify }}, "productsPerPage": {{site.data.settings.products_per_page}}, "filter": {{ page.filter }}, "query": {{page.query}}, "totalProducts": "{{page.total_products}}", "sort": {{site.data.settings.shop_sort_options | jsonify}}}</template>
 <br style="clear: both;">
 <div class="product-grid"></div>
 <ul id="pagination"></ul>
