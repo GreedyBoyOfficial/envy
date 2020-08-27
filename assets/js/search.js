@@ -81,7 +81,7 @@ function renderPagination({ productsPerPage, totalProducts, currentPage }) {
         pageLinks += renderPaginationLink({ totalPages, pageNum, currentPage });
     }
 
-    document.getElementById("pagination").innerHTML = firstPage + pageLinks + lastPage;
+    return firstPage + pageLinks + lastPage;
 }
 
 function copyToClipboard(text) {
@@ -315,21 +315,21 @@ function slugify (str) {
     return str;
 }
 
-function renderProducts({ productContainer, products }){
-    productContainer.innerHTML = 
-        products.map( product => {
-            const productIdHex = parseInt(product._id.slice(0,-4)).toString(36);
-            const slugifiedName = slugify( product.productname );
-            const path = localization.product+"/"+window.location.pathname.split("/").slice(2).join("/")
-            try {
-                return renderProduct( product, { url: window.origin+"/"+path+""+slugifiedName+"-"+productIdHex } );
-            } catch (error) {
-                console.error( error );
-                return "";
-            }
+function renderProducts( products ){
+    return products.map( product => {
+        const productIdHex = parseInt(product._id.slice(0,-4)).toString(36);
+        const slugifiedName = slugify( product.productname );
+        const path = localization.product+"/"+window.location.pathname.split("/").slice(2).join("/")
+        try {
+            return renderProduct( product, { url: window.origin+"/"+path+""+slugifiedName+"-"+productIdHex } );
+        } catch (error) {
+            console.error( error );
+            return "";
         }
-    ).join('')
+    }).join('')
+}
 
+function eventsProducts({ productContainer }){
     animateCSSGrid.wrapGrid(productContainer, {
         duration: 350,
         stagger: 10,
@@ -362,6 +362,37 @@ function renderProducts({ productContainer, products }){
 
     // Lazy load images
     lazyEvents();
+}
+
+function mostColorfulColor( ...colors ) {
+    let highestSaturation = 0;
+    let pickedColorIndex = 0;
+
+    for (let i = 0; i < colors.length; i++) {
+        const color = colors[i];
+        const min = Math.min( ...color );
+        const max = Math.max( ...color );
+        const colorSaturation = (max-min)/(max+min)
+        if ( colorSaturation > highestSaturation ) {
+            highestSaturation = colorSaturation;
+            pickedColorIndex = i
+        }
+    }
+
+    return [ colors[pickedColorIndex], pickedColorIndex ];
+}
+
+function renderSearchHeader({ color, image, title, description }){
+    return `<header class="no-cutoff search" data-featured-color="${ color }">
+        <figure class="featured-image" style="background: ${ color }">
+            <picture><img src="${ image }"></picture>
+        </figure>
+        <div class="information">
+            <span class="tag" style="color: ${ color }">${ localization.search }</span>
+            <h1>${ title }</h1>
+            <p>${ description }</p>
+        </div>
+    </header>`
 }
 
 (async function(){
@@ -406,19 +437,39 @@ function renderProducts({ productContainer, products }){
         });
     }
 
-    renderPagination({
-        productsPerPage: data.productsPerPage,
-        totalProducts: data.totalProducts,
-        currentPage: pageNum ? pageNum : 1
+    // Header
+    const [ featuredColor, featuredColorIndex ] = mostColorfulColor(
+        ...results.map( product => product.dominantColor )
+    );
+    const featuredColorRGB = `rgb(${ featuredColor.join(',') })`
+
+    const featuredProductImage = results[featuredColorIndex].images[0];
+
+    document.getElementById("header").innerHTML = renderSearchHeader({
+        color: featuredColorRGB,
+        image: featuredProductImage,
+        title: data.title,
+        description: data.description
     });
 
+    // Filter
+    // TODO: Render this
     filterEvents({
         sortOptions: data.sort,
         sort,
         includeSectionFilter
     });
 
+    // Products
     const productContainer = document.querySelector('.product-grid');
+    productContainer.innerHTML = renderProducts( results );
+    eventsProducts({ productContainer });
 
-    renderProducts({ productContainer, products: results });
+    // Pagination Links
+    document.getElementById("pagination").innerHTML = renderPagination({
+        productsPerPage: data.productsPerPage,
+        totalProducts: data.totalProducts,
+        currentPage: pageNum ? pageNum : 1
+    });
+    
 })();

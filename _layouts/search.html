@@ -46,7 +46,8 @@ layout: page
 {% capture description %}
     {{ site.data.localization.weFound | capitalize }} {{ page.total_products }} {{ page.title | downcase }} {{ site.data.localization.rangingFrom }} ${{ prices | first | divided_by: exchangerates.rates.USD | ceil }} {{ site.data.localization.to }} ${{ prices | last | divided_by: exchangerates.rates.USD | ceil }}
 {% endcapture %}
-{% include search-header.html
+<div id="header"></div>
+<!-- {% include search-header.html
     color=color
     categories=site.data.localization.search
     title=page.title
@@ -56,7 +57,7 @@ layout: page
     alt=post.featured-image-alt
     bottomCutoff=false
     isSmall=true
-%}
+%} -->
 <br>
 {%- comment -%} Start filters_in_use at -1 to ignore category as a filter {%- endcomment -%}
 {% assign filters_in_use = -1 %}
@@ -91,10 +92,9 @@ layout: page
 </div>
 {%- comment -%}
     Render data onto page for JS to render the page
-    
 {%- endcomment -%}
 {%- assign products = page.page1results %}
-<template id="data">{ "cachedProducts": {{ products | jsonify }}, "productsPerPage": {{site.data.settings.products_per_page}}, "query": {{page.query}}, "totalProducts": "{{page.total_products}}", "sort": {{site.data.settings.shop_sort_options | jsonify}}}</template>
+<template id="data">{ "title": "{{ page.title }}", "description": "{{ description | strip_newlines }}", "cachedProducts": {{ products | jsonify }}, "productsPerPage": {{site.data.settings.products_per_page}}, "filter": {{ page.filter }}, "query": {{page.query}}, "totalProducts": "{{page.total_products}}", "sort": {{site.data.settings.shop_sort_options | jsonify}}}</template>
 <br style="clear: both;">
 <div class="product-grid"></div>
 <ul id="pagination"></ul>
