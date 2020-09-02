@@ -10,16 +10,16 @@ function timeSinceDate(date, lang) {
     var seconds = Math.floor((new Date() - date) / 1000);
 
     var years = Math.floor(seconds / (60 * 60 * 24 * 365));
-    if ( years ) return render( years, "year");
+    if ( years > 0 ) return render( years, "year");
 
     const months = Math.floor(seconds / (60 * 60 * 24 * 30));
-    if ( months ) return render( months, "month" );
+    if ( months > 0 ) return render( months, "month" );
 
     const weeks = Math.floor(seconds / (60 * 60 * 24 * 7));
-    if ( weeks ) return render( weeks, "week" );
+    if ( weeks > 0 ) return render( weeks, "week" );
 
     const days = Math.floor(seconds / (60 * 60 * 24));
-    if ( days ) return render( days, "day" );
+    if ( days > 0 ) return render( days, "day" );
     
     return localization.brandNew
 }
@@ -27,7 +27,6 @@ function timeSinceDate(date, lang) {
 const lang = document.body.parentElement.getAttribute("lang");
 
 [...document.querySelectorAll(".time-since-published")].forEach( timeElem => {
-    console.log( timeElem.getAttribute("datetime") )
     const date = Date.parse(timeElem.getAttribute("datetime"));
     timeElem.innerHTML = timeSinceDate(date, lang);
 });
