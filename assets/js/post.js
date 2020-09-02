@@ -10,7 +10,7 @@ function timeSinceDate(date, lang) {
     var seconds = Math.floor((new Date() - date) / 1000);
 
     var years = Math.floor(seconds / (60 * 60 * 24 * 365));
-    if ( years ) return render(interval, "year");
+    if ( years ) return render( years, "year");
 
     const months = Math.floor(seconds / (60 * 60 * 24 * 30));
     if ( months ) return render( months, "month" );
