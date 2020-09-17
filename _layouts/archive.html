@@ -7,7 +7,7 @@ layout: page
     {% assign posts = site.posts | where: page.page_filter.key, page.page_filter.value %}
 {% endif %}
 
-{%- assign featured_limit = 5 -%}
+{%- assign featured_limit = 3 -%}
 {%- assign featured_posts = posts | where: "featured", true %}
 {%- if featured_posts.size > 1 %}
 <div class="slider content-width header">
