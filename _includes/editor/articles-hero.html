@@ -1,4 +1,4 @@
-{%- assign recentFeaturedArticles = site.posts | slice: 0, 5 -%}
+{%- assign recentFeaturedArticles = site.posts | where: "featured", true | slice: 0, 5 -%}
 <div class="articles-hero">
     <div class="hero">
         {% for post in recentFeaturedArticles %}
