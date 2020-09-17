@@ -144,7 +144,7 @@ body.has-scrollbar {
         width: calc( 100vw - 40px );
         height: calc( 100vh - 40px );
         picture {
-            height: 100vh;
+            height: calc( 100vh - 40px);
             overflow: hidden;
         }
         picture.lazy:not(.loaded) img {
