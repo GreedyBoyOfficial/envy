@@ -17,7 +17,8 @@
     .article-tile {
         height: 436px;
         top: 0;
-        img {
+        img, video {
+            position: relative;
             height: auto;
             width: auto;
             min-width: 100%;

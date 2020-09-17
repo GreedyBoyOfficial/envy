@@ -8,11 +8,17 @@
         {% assign image_name = image_name | remove: '.' | append: '/' | append: include.name | append: '.' %}
     {%- endif -%}
     {%- if image_ext == "webp" %}{% assign image_ext = "jpeg" %}{% endif -%}
-    <picture class="lazy {%- if include.zoomable != false %} zoomable {%- endif %}">
-        {%- if include.schemaorg %}<meta itemprop="image" content="{{ include.image }}">{% endif %}
-        <source type="image/webp" srcset="{{ image_url }}c_scale,e_blur:200,w_20/{{ image_name }}webp" data-srcset="{{ image_url }}{{ include.filter }}{{ image_name }}webp">
-        <img src="{{ image_url }}c_scale,e_blur:15,w_15/{{ image_name }}{{ image_ext }}" data-src="{{ image_url }}{{ include.filter }}{{ image_name }}{{ image_ext }}" alt="{{ include.alt }}" {%- if include.maxWidth %} style="max-width: {{include.maxWidth}}" {%- endif %}/>
-    </picture>
+    {% if image_ext == "mp4" %}
+        <video autoplay loop>
+            <source src="{{include.image}}" type="video/mp4">
+        </video>
+    {% else %}
+        <picture class="lazy {%- if include.zoomable != false %} zoomable {%- endif %}">
+            {%- if include.schemaorg %}<meta itemprop="image" content="{{ include.image }}">{% endif %}
+            <source type="image/webp" srcset="{{ image_url }}c_scale,e_blur:200,w_20/{{ image_name }}webp" data-srcset="{{ image_url }}{{ include.filter }}{{ image_name }}webp">
+            <img src="{{ image_url }}c_scale,e_blur:15,w_15/{{ image_name }}{{ image_ext }}" data-src="{{ image_url }}{{ include.filter }}{{ image_name }}{{ image_ext }}" alt="{{ include.alt }}" {%- if include.maxWidth %} style="max-width: {{include.maxWidth}}" {%- endif %}/>
+        </picture>
+    {% endif %}
 {%- elsif include.image %}
     <picture class="{%- if include.zoomable != false -%} zoomable {%- endif %}">
         <img src="{{ include.image }}" alt="{{ include.alt }}">
