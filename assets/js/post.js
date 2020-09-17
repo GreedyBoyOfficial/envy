@@ -45,3 +45,16 @@ window.addEventListener('load', function () {
 document.body.onscroll = function(){
     [...document.querySelectorAll('.fullscreen')].forEach( elem => elem.classList.remove('fullscreen') )
 };
+
+const getStyleInRGB = ( element, styleName ) => element.style[styleName]
+    .slice(4,-1)
+    .split(/, ?/)
+    .map( number => parseInt(number) );
+
+[...document.querySelectorAll(".product-embed .button, .product-embed .price")].forEach( elem => {
+    elem.style.backgroundColor = 'rgb('+generateContrastingColor( ...getStyleInRGB( elem, "backgroundColor" ) ).join(',')+")"
+});
+
+[...document.querySelectorAll(".product-embed .next span, .product-embed .prev span")].forEach( elem => {
+    elem.style.borderColor = 'rgb('+generateContrastingColor( ...getStyleInRGB( elem, "borderColor" ) ).join(',')+")"
+})
