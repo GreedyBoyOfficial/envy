@@ -162,7 +162,6 @@ function renderProduct( product, options ) {
     if ( product.description.custom ) {
         description = product.description.custom;
     }
-    console.log( product.localization, language )
     if ( product.localization && product.localization[language] ) {
         console.log( product.localization[language] );
         productName = product.localization[language].productname;
@@ -198,7 +197,7 @@ function renderProduct( product, options ) {
         <div class="details">
             <br>
             <h3 class="title" itemprop="name">${productName}</h3>
-            <span itemprop="sku" content="${product.sku}" /> 
+            <span itemprop="sku" content="${product.sku}"></span> 
             <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                 <span itemprop="priceCurrency" content="${localization.CURRENCY}"></span>
                 <link itemprop="url" href="${options.url}" />
