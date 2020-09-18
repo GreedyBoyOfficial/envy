@@ -115,6 +115,42 @@
     }
 }
 
+.embeded-instagram  a {
+    text-decoration: none;
+}
+
+.embeded-instagram {
+    text-align: center;
+}
+.embeded-instagram picture {
+    display: inline-block;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    background: #f3f3f3;
+    border-radius: 4px;
+    margin: 12px;
+    overflow: hidden;
+}
+.embeded-instagram img {
+    max-width: 250px;
+}
+.embeded-instagram a:nth-child(4n+1)::before {
+    content: '';
+    display: block;
+}
+
+.embeded-instagram__title a {
+    text-decoration: none;
+    color: #000;
+}
+.embeded-instagram__title svg {
+    vertical-align: middle;
+    height: 20px;
+    margin-top: -3px;
+    margin-right: 2px;
+}
+
 @media screen and ( min-width: 1400px ) {
     .articles-hero {
         padding-left: 80px;
