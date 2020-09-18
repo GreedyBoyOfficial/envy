@@ -205,6 +205,10 @@
     }
 }
 
+.product.slider {
+    display: block;
+}
+
 .product-tile:not(.product-tile--expanded) {
   .prev, .next { display: none; }
   .details {

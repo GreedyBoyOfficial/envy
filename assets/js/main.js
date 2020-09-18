@@ -156,8 +156,16 @@ function slider( sliderElem, slideInterval=-1, onSlideChange=()=>{} ) {
         setTimer();
     }
 
-    if ( prev ) prev.onclick = () => prevSlide();
-    if ( next ) next.onclick = () => nextSlide();
+    if ( prev ) prev.onclick = e => {
+        e.stopPropagation();
+        e.preventDefault();
+        prevSlide();
+    }
+    if ( next ) next.onclick = e => {
+        e.stopPropagation();
+        e.preventDefault();
+        nextSlide();
+    }
     sliderElem.onscroll = onScroll;
 
     onScroll();

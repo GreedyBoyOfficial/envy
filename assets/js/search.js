@@ -178,7 +178,7 @@ function renderProduct( product, options ) {
     return `<div class="product-tile${ product.isFeatured ? " featured" : '' }${ options.expanded ? " product-tile--expanded" : "" }${ options.wide ? " product-tile--wide" : "" }" itemscope itemtype="http://schema.org/Product">
     <div>
         <figure>
-            <div class="slider product" style="background: ${productColor}">
+            <a href="${options.url}" class="slider product" style="background: ${productColor}">
                 <span itemprop="image" content="${product.images[0]}"></span>
                 <div class="slides">
                     ${ product.images.map( image => renderImage({ background: product.backgroundColor, legacy: image, alt: product.productname }) ).join('') }
@@ -186,7 +186,7 @@ function renderProduct( product, options ) {
                 <div class="prev"><span style="border-color: ${contrastingProductColor}"></span></div>
                 <div class="next"><span style="border-color: ${contrastingProductColor}"></span></div>
                 <span class="price" style="background: ${contrastingProductColor}">${ priceText }</span>
-            </div>
+            </a>
             <div class="dots">
                 ${ product.images.map( (x, i) => `<div class="dot${i===0?' active':''}"></div>` ).join('') }
             </div>
@@ -339,7 +339,9 @@ function renderProducts({ productContainer, products }){
         const tileElem = productTiles[i];
 
         // When you click on the slides of the tiles
-        tileElem.querySelector(".slides").onclick = function(){
+        tileElem.querySelector(".slides").onclick = function( e ){
+            e.stopPropagation();
+            e.preventDefault();
 
             // Expand or contract them
             tileElem.classList.toggle("product-tile--expanded");
