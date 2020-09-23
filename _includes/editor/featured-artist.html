@@ -1,0 +1,7 @@
+{% if include.title %} <p style="text-align: center;"><b>{{ include.title }}</b></p>{% endif %}
+<div class="featured-artist">
+    <div class="information">
+        {% include partial/picture.html image=include.cover %}
+    </div>
+    {% include editor/product-list.html half-width=true category_permalink=include.category_permalink product1=include.product1 product2=include.product2 product3=include.product3 product4=include.product4 %}
+</div>

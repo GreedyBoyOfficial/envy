@@ -1,7 +1,7 @@
 {%- assign search_page = site.search_pages | where: "permalink", include.category_permalink | first -%}
 {% if include.title %} <p style="text-align: center;"><b>{{ include.title }}</b></p>{% endif %}
 
-<div class="product-grid product-row">
+<div class="product-grid product-row {%- if include.half-width %} product-grid__half{%endif%}">
     {% if include.product1 && include.product2 && include.product3 && include.product4 %}
         {% assign product1data = include.product1 | get_product %}
         {% include partial/product-link.html category_permalink=include.category_permalink product=product1data %}

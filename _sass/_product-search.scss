@@ -147,6 +147,9 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: calc(25% - 18px) calc(25% - 18px) calc(25% - 18px) calc(25% - 18px);
+    &.product-grid__half {
+        grid-template-columns: calc(50% - 18px) calc(50% - 18px)
+    }
     // grid-auto-rows: 12rem;
     grid-gap: 24px;
     grid-auto-flow: dense;
