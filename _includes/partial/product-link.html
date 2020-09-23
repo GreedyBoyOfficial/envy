@@ -1,0 +1,16 @@
+{% capture productColor %}rgb({{ include.product.dominantColor | join: ','}}){% endcapture %}
+<a href="/{{include.category_permalink | replace: site.data.localization.shop, site.data.localization.product }}/{{include.product.productname | slugify }}-{{ include.product._id | changebase: 36 }}" target="blank" class="product-tile{%if product.isFeatured %} featured{%endif%}">
+    <div>
+        <figure>
+            <div class="slider product nozoom" style="background: {{ productColor }}">
+                <div class="slides">
+                    {%- assign product_image = include.product.images[0] -%}
+                    {%- include partial/picture.html image=product_image -%}
+                </div>
+            </div>
+            <figcaption>
+                <span class="title">{{include.product.productname}}</span><br>
+            </figcaption>
+        </figure>
+    </div>
+</a>
