@@ -1,7 +1,68 @@
-{% if include.title %} <p style="text-align: center;"><b>{{ include.title }}</b></p>{% endif %}
+{% if include.title %} <h2 class="slogan">{{ include.title }}</h2>{% endif %}
 <div class="featured-artist">
     <div class="information">
         {% include partial/picture.html image=include.cover %}
     </div>
-    {% include editor/product-list.html half-width=true category_permalink=include.category_permalink product1=include.product1 product2=include.product2 product3=include.product3 product4=include.product4 %}
+    <div class="product-grid product-row product-grid__half">
+        <a href="https://click.linksynergy.com/link?id=n*ylpS5NH00&offerid=818443.17632655450&type=2&murl=https%3A%2F%2Fwww.ssense.com%2Fen-us%2Fmen%2Fproduct%2Fdries-van-noten%2Fyellow-linda-farrow-edition-98-c11-sunglasses%2F6063411" target="blank" class="product-tile">
+            <div>
+                <figure>
+                    <div class="slider product nozoom" style="background: #ddbc5c">
+                        <div class="slides">
+                            {%- include partial/picture.html image="https://img.ssensemedia.com/image/upload/b_white/c_scale,h_820/f_auto,dpr_1.0/202358M134355_1.jpg" -%}
+                        </div>
+                    </div>
+                    <figcaption>
+                        <span class="title">Dries Van Noten Yellow Linda Farrow Edition 98 C11 Sunglasses</span><br>
+                    </figcaption>
+                </figure>
+            </div>
+        </a>
+
+        <a href="https://click.linksynergy.com/link?id=n*ylpS5NH00&offerid=818443.17522213746&type=2&murl=https%3A%2F%2Fwww.ssense.com%2Fen-us%2Fmen%2Fproduct%2Fdries-van-noten%2Fred-silk-floral-shirt%2F5455571" target="blank" class="product-tile">
+            <div>
+                <figure>
+                    <div class="slider product nozoom" style="background: #8c2621">
+                        <div class="slides">
+                            {%- include partial/picture.html image="https://res.cloudinary.com/ssenseweb/image/upload/b_white%2Cc_lpad%2Cg_center%2Ch_960%2Cw_960/c_scale%2Ch_680/f_auto%2Cdpr_1.0/v572/202358M192030_1.jpg" -%}
+                        </div>
+                    </div>
+                    <figcaption>
+                        <span class="title">Dries Van Noten Red Silk Floral Shirt</span><br>
+                    </figcaption>
+                </figure>
+            </div>
+        </a>
+
+        <a href="https://click.linksynergy.com/link?id=n*ylpS5NH00&offerid=779591.17655969158&type=2&murl=https%3A%2F%2Fwww.24s.com%2Fen-gb%2Ftiger-printed-shirt-dries-van-noten_DVN94MJT%3FdefaultSku%3DDVN94MJTBEIME04400%26color%3Dbeige%26lgw_code%3D4088-DVN94MJTBEIME04400" target="blank" class="product-tile">
+            <div>
+                <figure>
+                    <div class="slider product nozoom" style="background: #b27333">
+                        <div class="slides">
+                            {%- include partial/picture.html image="https://img.zolaprod.babsta.net/gJFYvEjMjb918YYh0kx_WMMbQKA=/500x500/6898c18c6fec4c02af1a40a572824db6/product.DVN94MJTBEIME05000.NBG" -%}
+                        </div>
+                    </div>
+                    <figcaption>
+                        <span class="title">Tiger printed shirt</span><br>
+                    </figcaption>
+                </figure>
+            </div>
+        </a>
+
+        <a href="https://click.linksynergy.com/link?id=n*ylpS5NH00&offerid=818443.17632690542&type=2&murl=https%3A%2F%2Fwww.ssense.com%2Fen-us%2Fmen%2Fproduct%2Fdries-van-noten%2Fburgundy-leather-zip-up-boots%2F5495481" target="blank" class="product-tile">
+            <div>
+                <figure>
+                    <div class="slider product nozoom" style="background: #b27333">
+                        <div class="slides">
+                            {%- include partial/picture.html image="https://res.cloudinary.com/ssenseweb/image/upload/b_white%2Cc_lpad%2Cg_center%2Ch_960%2Cw_960/c_scale%2Ch_680/f_auto%2Cdpr_1.0/v572/202358M228312_1.jpg" -%}
+                        </div>
+                    </div>
+                    <figcaption>
+                        <span class="title">Dries Van Noten Burgundy Leather Zip-Up Boots</span><br>
+                    </figcaption>
+                </figure>
+            </div>
+        </a>
+
+    </div>
 </div>
